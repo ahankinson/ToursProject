@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <h1>Piece List</h1>
+    <ul>
+    {% for piece in content %}
+        <li><a href="{{ piece.url }}">{{ piece.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}

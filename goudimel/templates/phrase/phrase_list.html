@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <h1>Phrase List</h1>
+    <ul>
+    {% for phrase in content %}
+        <li><a href="{{ phrase.url }}">{{ phrase.phrase_text }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}
