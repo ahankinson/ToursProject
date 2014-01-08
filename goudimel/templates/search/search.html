@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-8">
+        <h2>Search</h2>
+        <form id="search-form" action="/search" method="get">
+            <input type="text" name="q" class="search-input" />
+            <button type="submit" class="btn">Search</button>
+        </form>
+
+        {% if content.results %}
+            <h3>Results</h3>
+            {% include "search/search_results.html" %}
+        {% endif %}
+    </div>
+    <div class="col-md-4">
+        <h2>Facets</h2>
+        {% if content.facets %}
+            {% for name, facets in content.facets.facet_fields.items %}
+                <div class="row">
+                    <h4>{{ name }}</h4>
+                    <ul>
+                        {% for facet, count in facets.items %}
+                            <li><a class="facet-link" href="#" data-facet-name="{{ name }}" data-facet-value="{{ facet }}">{{ facet }}</a> ({{ count }})</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <script type="text/javascript">
+            $(".facet-link").on('click', function(event)
+            {
+                var qstr = window.location.search.replace("?", "");
+                var qstr_params = $.parseParams(qstr);
+
+                var facetName = $(this).data('facet-name');
+                var facetValue = $(this).data('facet-value');
+                if (!(facetName in qstr_params))
+                {
+                    var facetQ = facetName + "=" + facetValue;
+                    if (qstr != "")
+                    {
+                        // this makes sure that we either append the 
+                        // querystring to an existing query string
+                        // (with a "&") or we just append it to the
+                        // existing URL.
+                        facetQ = "&" + facetQ;
+                    }
+
+                    window.location.search = qstr + facetQ;
+                }
+                event.preventDefault();
+            })
+        </script>
+    </div>
+</div>
+{% endblock %}
