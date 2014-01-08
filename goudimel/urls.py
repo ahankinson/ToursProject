@@ -10,6 +10,7 @@ from goudimel.views.main import PieceList
 from goudimel.views.main import PieceDetail
 from goudimel.views.main import PhraseList
 from goudimel.views.main import PhraseDetail
+from goudimel.views.search import SearchView
 
 urlpatterns = patterns('',
     # Examples:
@@ -24,6 +25,8 @@ urlpatterns = patterns('',
 
     url(r'^phrases/$', PhraseList.as_view(), name="phrases-list"),
     url(r'^phrase/(?P<pk>[0-9]+)/$', PhraseDetail.as_view(), name="phrase-detail"),
+
+    url(r'^search/$', SearchView.as_view(), name="search-view"),
 
     url(r'^admin/', include(admin.site.urls)),
 )
